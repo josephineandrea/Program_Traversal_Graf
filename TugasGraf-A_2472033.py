@@ -1,4 +1,23 @@
+# Method Traversal Graf dengan BFS dan DFS diambil
+# dari power point "Struktur Graf"
+# 2472033 Josephine Andrea Sanjaya
+
+## Definisi Kelas ##
+## Definisi Kelas TraversalGraf : kelas untuk
+## melakukan traversal graf dengan metode BFS dan DFS
+## Definisi Atribut
+## N : jumlah simpul pada graf (integer)
+## matriks : matriks adjacency untuk menyimpan data graf
+## (array 2 dimensi)
+## abjad : list untuk menyimpan nama simpul pada graf
+## (array of string)
+
 class TraversalGraf():
+    
+    ## Definisi Konstruktor
+    # Kamus Lokal
+    # size : ukuran array (integer)
+    # i : variabel pengendali for (integer)
     def __init__(self, size):
         self.N = size
         self.matriks = [None] * self.N
@@ -9,6 +28,11 @@ class TraversalGraf():
             self.abjad[i] = chr(ord('A') + i)
         return
     
+    ## Definisi Method fillMatriks(self)
+    # method untuk mengisi matriks adjacency
+    # Kamus Lokal
+    # i : variabel pengendali for (integer), baris
+    # j : variabel pengendali for (integer), kolom
     def fillMatriks(self):
         for i in range(0, self.N, 1):
             print("=======================")
@@ -19,6 +43,11 @@ class TraversalGraf():
                 self.matriks[i][j] = int(input())
         return
     
+    ## Definisi Method printMatriks(self)
+    # method untuk mencetak matriks adjacency
+    # Kamus Lokal
+    # i : variabel pengendali for (integer), baris
+    # j : variabel pengendali for (integer), kolom
     def printMatriks(self):
         for i in range(0, self.N, 1):
             for j in range(0, self.N, 1):
@@ -26,6 +55,14 @@ class TraversalGraf():
             print()
         return
     
+    ## Definisi Method traversalBfs(self, simpulAwal)
+    # method untuk melakukan traversal BFS pada graf
+    # Kamus Lokal
+    # Q : queue untuk menyimpan simpul yang akan dikunjungi (Queue)
+    # visited : list untuk menyimpan boolean untuk simpul (array of boolean)
+    # w : variabel untuk menyimpan simpul yang sedang dikunjungi (integer)
+    # simpulAwal : simpul awal untuk traversal (integer)
+    # i : variabel pengendali for (integer)
     def traversalBfs(self, simpulAwal):
         Q = Queue(self.N)
         visited = [False] * self.N
@@ -41,6 +78,13 @@ class TraversalGraf():
                     Q.insert(i)
         return
 
+    ## Definisi Method traversalDfs(self, simpulAwal)
+    # method untuk melakukan traversal DFS pada graf
+    # Kamus Lokal
+    # visited : list untuk menyimpan boolean untuk simpul (array of boolean)
+    # w : variabel untuk menyimpan simpul yang sedang dikunjungi juga 
+    # pengendali for (integer)
+    # simpulAwal : simpul awal untuk traversal (integer)
     def traversalDfs(self, simpulAwal, visited):
         print(self.abjad[simpulAwal], end=" ")
         visited[simpulAwal] = True
@@ -48,14 +92,30 @@ class TraversalGraf():
             if(self.matriks[simpulAwal][w] == 1):
                 if(visited[w] == False):
                     self.traversalDfs(w, visited)
-    
+
+## Definisi Kelas ##
+## Definisi Kelas Queue : kelas untuk
+## menyimpan simpul yang akan dikunjungi pada traversal BFS
+## Definisi Atribut
+## head : indeks untuk simpul pertama pada queue (integer)
+## tail : indeks untuk simpul terakhir pada queue (integer)
+## maxEl : ukuran maksimal queue (integer)
+## items : array untuk menyimpan simpul pada queue (array of integer)
+
 class Queue():
+    
+    ## Definisi Konstruktor
+    # Kamus Lokal
+    # size : ukuran queue (integer)
     def __init__(self, size):
         self.head = 0
         self.tail = 0
         self.maxEl = size
         self.items = [None] * (self.maxEl+1)
     
+    ## Definisi Method insert(self, X)
+    # Kamus Lokal
+    # X : nilai yang akan ditambahkan (integer)
     def insert(self, X):
         if(self.head == 0 and self.tail == 0):
             self.head = 1
@@ -68,6 +128,9 @@ class Queue():
         self.items[self.tail] = X
         return
     
+    ## Definisi Method delete()
+    # Kamus Lokal
+    # X : nilai yang akan dibuang (integer)
     def delete(self):
         X = self.items[self.head]
         if(self.head == self.tail):
@@ -80,6 +143,11 @@ class Queue():
                 self.head += 1
         return X
 
+## Program utama ##
+# Kamus Lokal
+# totalSimpul : jumlah simpul yang diinput user (integer)
+# graf : inisiasi objek dari kelas TraversalGraf (TraversalGraf)
+# visited : list untuk menyimpan boolean untuk simpul (array of boolean)
 def main():
     totalSimpul = int(input("Jumlah Simpul: "))
     graf = TraversalGraf(totalSimpul)
